@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        #s1{
+            width: 100%;
+            min-height: 100vh;
+            /* background:linear-gradient(135deg,#153677,#4e085f); */
+           background-color: #090979;
+           background: linear-gradient(#e66465, #9198e5);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* padding: 20px; */
+        }
+
+        #d1{
+            width: 100%;
+            max-width: 540px;
+            background-color: #fff;
+            padding: 40px 30px 70px;
+            border-radius:10px;
+        }
+
+        #d2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             background-color: #edeef0; 
+            border-radius: 20px;
+            padding-left: 10px;
+            margin: 15px;
+            width: 100%;
+        }
+
+        input{
+            flex: 1;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            padding: 10px;   
+            width: 100%;
+        }
+
+        button{
+            border: none;
+            outline: none;
+            padding: 15px 40px;
+            background: #ff5945;
+            color: #fff;
+            font-size: 10px;
+            cursor: pointer;
+            border-radius:40px;
+        }
+
+       ul li{
+        list-style-type: none;
+        font-size: 17px;
+        padding: 12px 8px 12px;
+        user-select: none;
+        position: relative;
+        cursor: pointer;
+        left: 25px;
+       }
+
+       ul li::before{
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background-image: url(uncheck-48.png);
+        border-radius:50%;
+        background-size: cover;
+        background-position: center;
+        top: 12px;
+        left: -20px;
+       }
+
+       ul li.ch{
+        color: #555;
+        text-decoration: line-through;
+       }
+
+       ul li.ch::before{
+           background-image: url(Eo_circle_deep-orange_white_checkmark.svg);
+       }
+
+       img{
+        width: 50px;
+        height: 38px;
+       }
+
+       .logo{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        /* flex-direction: row; */
+        /* border: 2px solid black; */
+        flex-direction: row;
+       }
+
+       @media(max-width:991px){
+        button{
+            font-size: 10px;
+        }
+       }
+
+
+       ul li img{
+        position: absolute;
+        right: 0;
+        top: 5px;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+       }
+
+       ul li img:hover{
+           background:#edeef0 ;
+           /* border-radius: 50%; */
+       }
+    </style>
+</head>
+<body>
+    <section id="s1">
+        <div id="d1">
+        <div class="logo">
+            <h1 style="text-align: center;font-size: 30px;font-family: cursive;">To-Do List</h1>
+            <img src="vecteezy_to-do-list-hand-drawn-doodle-icon_6549765.jpg">
+        </div>
+            <div id="d2">
+            <input type="text" placeholder="New Todo" id="inputbox">
+            <button type="button" id="btn">Add</button>
+        </div>
+        <ul id="list1">
+            <!-- <li class="ch">Task 1</li>
+            <li>Task 1</li>
+            <li>Task 1</li> -->
+        </ul>
+        </div>
+    </section>
+
+
+
+
+
+    <script>
+        let inputbox = document.getElementById("inputbox");
+        let listCounter = document.getElementById("list1");
+
+
+       
+
+
+        let btn = document.getElementById("btn");
+
+        btn.addEventListener("click",()=>{
+
+            if(inputbox.value === ""){
+                alert("please Enter write something");
+            }
+            else{
+                let li = document.createElement("li");
+                li.innerHTML = inputbox.value;
+                listCounter.appendChild(li);
+                let img = document.createElement("img");
+                // span.innerHTML = "&times";
+                // span.innerHTML = "&#xe872;";
+                img.setAttribute('src','delete-512.jpg');
+                li.appendChild(img);
+
+            }
+            inputbox.value = "";
+            saveData();
+        })
+
+        listCounter.addEventListener("click",function(e){
+
+            if(e.target.tagName === "LI"){
+                e.target.classList.toggle("ch");
+                saveData();
+            }
+            else if(e.target.tagName === "IMG"){
+                e.target.parentElement.remove();
+                saveData();
+            }
+
+        },false);
+
+        function saveData(){
+            localStorage.setItem("data",listCounter.innerHTML);
+        }
+
+        function showdata(){
+            listCounter.innerHTML = localStorage.getItem("data");
+        }
+        showdata();
+
+
+
+
+
+    </script>
+
+   
+
+
+
+
+</body>
+</html>
